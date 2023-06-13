@@ -712,7 +712,10 @@ public: // Exposed APIs
     auto itr = claim_names_.find(cname);
     if (itr == claim_names_.end()) return false;
 
-    return (cvalue == payload_[cname.data()]);
+    if (!payload_[cname.data()].is_string()) {
+      return false;
+    }
+    return (cvalue == payload_[cname.data()].get<std::string>());
   }
 
   /**
